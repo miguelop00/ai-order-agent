@@ -1,0 +1,17 @@
+{
+    "Miguel": {
+        "cerveza": "2 cajas",
+        "patatas": "3 kilos",
+        "botellas de agua": "3",
+        "agua": "11 botellas",
+        "limones": "1 kilo"
+    },
+    "Nacho": {
+        "cerveza": "2 cajas",
+        "patatas": "3 kilos",
+        "lechuga": "3 kilos"
+    },
+    "cliente": {
+        "lechuga": "3 kilos"
+    }
+}
