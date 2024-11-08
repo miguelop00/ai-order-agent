@@ -12,7 +12,12 @@ La segunda herramienta consiste en tomar el diccionario generado por crear_dict,
 
 2. Dar información sobre un pedido:
 
-Para esta función, hemos creado una herramienta llamada "info_pedidos", la cual recoge la información del archivo JSON generada antes, y selecciona el pedido en función del nombre del cliente.
+Para esta función, hemos creado una herramienta llamada "info_pedidos", la cual recoge la información del archivo JSON generada antes, y selecciona el pedido en función del nombre del cliente.  
+
+
+
+****
+
 
 
 
