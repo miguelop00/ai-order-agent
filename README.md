@@ -1,6 +1,6 @@
-# Agente para gestión de pedidos
+# Order Management AI Agent
 
-### Versión 1.0
+### Version 1.0
 
 The aim of this first version of the project is to create a conversational agent, using either OpenAI or any open-source LLM, to manage customer order data and perform simple tasks with it. It is intended to improve the communication between client and business, making it 24/7 available for ordering. 
 
