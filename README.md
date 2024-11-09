@@ -10,7 +10,7 @@ El cliente pide una serie de elementos, y el agente los separa entre nombre, ele
 
 La segunda herramienta consiste en tomar el diccionario generado por crear_dict, e incluirlo en el archivo JSON (pedidos.json), con el mismo formato. Esta herramienta se llama "registrar_pedido".
 
-2. Dar información sobre un pedidos:
+2. Dar información sobre un pedido:
 
 Para esta función, hemos creado una herramienta llamada "info_pedidos", la cual recoge la información del archivo JSON generada antes, y selecciona el pedido en función del nombre del cliente.  
 
