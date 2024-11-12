@@ -1,5 +1,8 @@
 import nest_asyncio
 import json
+import os
+import requests
+from dotenv import load_dotenv
 from app.config import config
 from app.config import OPENAI_API_KEY, PEDIDOS_PATH
 from llama_index.llms.openai import OpenAI
@@ -7,10 +10,12 @@ from llama_index.core.tools import FunctionTool
 from llama_index.core.agent import FunctionCallingAgentWorker
 from llama_index.core.agent import AgentRunner
 
+
 def crear_dict(**kwargs):
     """Toma todos los elementos requeridos y los añade a un diccionario con la siguiente forma: {Nombre del cliente: {elemento1: cantidad1, elemento2: cantidad2,...}}.
      Ten en cuenta que las cantidades pueden venir en distintos formatos (1 elemento, 1 caja de elementos, 1 camión de elementos...) """
     return dict(kwargs)
+
 
 def registrar_pedido(nombre, diccionario):
     """Añade el diccionario a un archivo JSON existente y hace saber al cliente que su pedido está registrado, incluyendo los elementos del pedido en la respuesta.
@@ -44,6 +49,7 @@ def registrar_pedido(nombre, diccionario):
     with open(PEDIDOS_PATH, 'w', encoding='utf-8') as archivo:
         json.dump(contenido, archivo, ensure_ascii=False, indent=4)
 
+
 def info_pedidos():
     """Da información al cliente sobre los elementos de su pedido, a partir del contenido de un archivo JSON.""" 
     with open(PEDIDOS_PATH, 'r', encoding='utf-8') as archivo:
@@ -51,7 +57,23 @@ def info_pedidos():
     return contenido
 
 
-def run_agent_logic(message):
+async def send_to_telegram(message:str, user_id:str):
+    load_dotenv()
+
+    TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
+
+    bot_url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
+    data = {
+        'chat_id': user_id,
+        'text': message
+    }
+
+    response = requests.post(bot_url, data=data)
+    if response.status_code != 200:
+        print(f"Error al enviar mensaje a Telegram: {response.status_code}, {response.text}")
+
+
+async def run_agent_logic(message, user_id):
     # Implementa aquí la lógica de tu agente. Por ejemplo:
     nest_asyncio.apply()
     agent_prompt = config.AGENT_PROMPT
@@ -71,4 +93,4 @@ def run_agent_logic(message):
 
     response = agent.chat(message)
 
-    return response
+    await send_to_telegram(response, user_id)
