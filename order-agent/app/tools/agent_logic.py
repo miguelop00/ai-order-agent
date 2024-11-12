@@ -12,15 +12,15 @@ from llama_index.core.agent import AgentRunner
 
 
 def crear_dict(**kwargs):
-    """Toma todos los elementos requeridos y los añade a un diccionario con la siguiente forma: {Nombre del cliente: {elemento1: cantidad1, elemento2: cantidad2,...}}.
-     Ten en cuenta que las cantidades pueden venir en distintos formatos (1 elemento, 1 caja de elementos, 1 camión de elementos...) """
+    """Esta función toma todos los elementos requeridos y los añade a un diccionario con la siguiente forma: {id del cliente: {elemento1: cantidad1, elemento2: cantidad2,...}}.
+     Ten en cuenta que las cantidades pueden venir en distintos formatos (1 elemento, 1 caja de elementos, 1 camión de elementos...)."""
     return dict(kwargs)
 
 
-def registrar_pedido(nombre, diccionario):
+def registrar_pedido(id, diccionario):
     """Añade el diccionario a un archivo JSON existente y hace saber al cliente que su pedido está registrado, incluyendo los elementos del pedido en la respuesta.
-    El diccionario creado antes es del formato {Nombre del cliente: {elemento1: cantidad1, elemento2: cantidad2,...}}, así que las variables de la función son:
-    nombre: Nombre del cliente
+    El diccionario creado antes es del formato {id del cliente: {elemento1: cantidad1, elemento2: cantidad2,...}}, así que las variables de la función son:
+    id: id del cliente
     diccionario: {elemento1: cantidad1, elemento2: cantidad2,...}"""
     
     try:
@@ -31,15 +31,15 @@ def registrar_pedido(nombre, diccionario):
          contenido = {}
 
     
-    if nombre in contenido:
+    if id in contenido:
         for item, cantidad in diccionario.items():
-            if item in contenido[nombre]:
-                contenido[nombre][item] += cantidad
+            if item in contenido[id]:
+                contenido[id][item] += cantidad
             else:
-                contenido[nombre][item] = cantidad
+                contenido[id][item] = cantidad
 
     else:
-        contenido[nombre] = diccionario    
+        contenido[id] = diccionario    
     
 
     # Añade el nuevo diccionario al contenido existente
@@ -90,7 +90,7 @@ async def run_agent_logic(message, user_id):
         verbose=True
     )
     agent = AgentRunner(agent_worker)
-
-    response = agent.chat(message)
+    message_and_id = str(user_id) + ": " + message
+    response = agent.chat(message_and_id)
 
     await send_to_telegram(response, user_id)

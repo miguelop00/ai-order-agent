@@ -1,14 +1,7 @@
 {
-    "Miguel": {
-        "tomates": 3,
-        "lechugas": 4,
-        "zanahorias": 5,
-        "aguacates": 6
-    },
-    "cliente": {
-        "manzanas": 3
-    },
-    "Usuario": {
-        "manzanas": "3 cajas"
+    "934413014": {
+        "cajas de agua": 12,
+        "botellas de vino": 16,
+        "bolsas de fruta": 3
     }
 }
